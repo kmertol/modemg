@@ -8,10 +8,10 @@ Designed for high reliability, dynamic IP M2M communications.
 ## Features
 
 * User defined connection message format which can be used to identify
-	devices on the field and give gsm/connection related information
+	devices on the field and give GSM/Connection related information
 * Extensive and easy configuration through text files over TCP
 * Ability to access the AT interface through the current active connection
-	(listening with TCPATRUN on a dynamic IP assigned device will not work)
+	(listening with *TCPATRUN* on a dynamic IP assigned device will not work)
 * Watchdog, reset on high downtime, periodic reset to achieve high reliability
 * 4K buffer for serial: to hold onto data at downtime
 
@@ -148,18 +148,17 @@ Both of these settings lets you define your own message using a python string, w
 This string is sent to the server as the first packet when a new connection is established. This way you can use the
 Telit modules identification parameters as some kind of a device id, and use it to identify your devices in the field.
 
-* **{imei}, {msisdn}, {imsi}, {iccid}:** these are self-explanatory
+* **{imei}, {msisdn}, {imsi}, {iccid}, {operator}:** these are self-explanatory
+* **{cell}:** GSM cells information parsed nicely (AT#MONI)
 * **{csq}:** carrier signal quality (AT+CSQ)
-* **{power_uptime}:** uptime in seconds since reboot (more exactly since the first gsm network acquisition)
-* **{session_uptime}:** uptime in seconds since activating the gprs pdp context, will reset when gprs is down
+* **{power_uptime}:** uptime in seconds since reboot (more exactly since the first GSM network acquisition)
+* **{session_uptime}:** uptime in seconds since activating the GPRS PDP Context, will reset when GPRS is down
+* **{downtime}:** time in seconds spent not connected to any server the last time
+* **{disconnection}:** total socket/server disconnection count
 * **{gdatavol_total}:** total data usage (AT#GDATAVOL=2), this value is not so reliable since it is not saved into non-volatile
 	memory frequently
 * **{gdatavol_session}:** session data usage (AT#GDATAVOL=1), unlike total this is more reliable, but will reset if the
 	session is down
-* **{disconnection}:** total socket/server disconnection count
-* **{downtime}:** time in seconds spent not connected to any server the last time
-* **{cell}:** gsm cells information parsed nicely (AT#MONI)
-
 
 *Let's take a look at the default connection message and its output:*
 
@@ -179,7 +178,7 @@ Telit modules identification parameters as some kind of a device id, and use it 
 
 ### serial_magic
 
-This string is sent to the serial port on the acquisition of a gsm network.
+This string is sent to the serial port on the acquisition of a GSM network.
 
 The magic keywords **{yy}, {MM}, {dd}, {hh}, {mm}, {ss}** correspond to year, month,
 day, hour, min, sec respectively. I thought it as a way to automatically synchronize
